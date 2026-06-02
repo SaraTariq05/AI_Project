@@ -95,23 +95,32 @@ def analyze():
 
     # ── META PROMPT (STRONG JSON FORCE) ──
     meta_prompt = f"""
-You are a strict JSON generator.
+    You are a legal document analyzer.
 
-Return ONLY valid JSON.
+    Extract structured information strictly from the document.
 
-Schema:
-{{
-  "document_type": "string",
-  "summary": "string",
-  "parties": [],
-  "key_dates": [],
-  "key_obligations": {[]},
-  "penalties": []
-}}
+    Return ONLY valid JSON.
 
-Document:
-{text}
-"""
+    IMPORTANT:
+    - key_obligations MUST contain real extracted duties from the document
+    - Group obligations by party (Landlord, Tenant, etc.)
+    - Each party must have a list of bullet-like obligations
+
+    Schema:
+    {{
+    "document_type": "string",
+    "summary": "string",
+    "parties": [],
+    "key_dates": [],
+    "key_obligations": {{
+        "PartyName": ["obligation 1", "obligation 2"]
+    }},
+    "penalties": []
+    }}
+
+    Document:
+    {text}
+    """
 
     try:
         raw = call_groq("Return only JSON.", meta_prompt)
