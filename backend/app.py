@@ -105,7 +105,7 @@ Schema:
   "summary": "string",
   "parties": [],
   "key_dates": [],
-  "key_obligations": {{}},
+  "key_obligations": {[]},
   "penalties": []
 }}
 

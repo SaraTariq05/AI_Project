@@ -101,22 +101,56 @@ export default function ResultsPanel({ results, analyzing, urduMode }) {
 
       {/* Obligations tab */}
       {tab === 'obligations' && (
-        <div className="fade-up" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          {info.key_obligations && Object.entries(info.key_obligations).map(([party, items], i) => (
-            <div key={i} style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 14, padding: 18 }}>
-              <div style={{ fontWeight: 700, fontSize: 14, color: T.gold, marginBottom: 14 }}>
-                {i === 0 ? '🏠' : '👤'} {party.replace(/_/g,' ')}
+        <div
+          className="fade-up"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 16
+          }}
+        >
+          {info?.key_obligations &&
+            typeof info.key_obligations === 'object' &&
+            !Array.isArray(info.key_obligations) &&
+            Object.entries(info.key_obligations).map(([party, items], i) => (
+              <div
+                key={i}
+                style={{
+                  background: T.card,
+                  border: `1px solid ${T.border}`,
+                  borderRadius: 14,
+                  padding: 18
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 14,
+                    color: T.gold,
+                    marginBottom: 14
+                  }}
+                >
+                  {i === 0 ? '🏠' : '👤'} {party.replace(/_/g, ' ')}
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {(Array.isArray(items) ? items : []).map((item, j) => (
+                    <div
+                      key={j}
+                      style={{
+                        display: 'flex',
+                        gap: 10,
+                        fontSize: 13,
+                        lineHeight: 1.6
+                      }}
+                    >
+                      <span style={{ color: T.gold, flexShrink: 0 }}>→</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {(items || []).map((item, j) => (
-                  <div key={j} style={{ display: 'flex', gap: 10, fontSize: 13, lineHeight: 1.6 }}>
-                    <span style={{ color: T.gold, flexShrink: 0 }}>→</span>
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
 
